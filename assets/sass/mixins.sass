@@ -1,0 +1,29 @@
+=breakpoint($point)
+  @if $point == mobile
+    @media (max-width: 750px)
+      @content
+  @else if $point == tablet
+    @media (max-width: 830px)
+      @content
+  @else if $point == largeDesktop
+    @media (min-width: 1700px)
+      @content    
+  @else if $point
+    @media (max-width: $point)
+      @content
+
+=centerV
+  position: absolute
+  transform: translateY(-50%)
+  top: 50%
+
+=centerH
+  position: absolute
+  transform: translateX(-50%)
+  left: 50%
+
+=centerVH
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
