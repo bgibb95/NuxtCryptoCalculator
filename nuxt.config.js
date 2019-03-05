@@ -16,6 +16,10 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
+  router: {
+    base: process.env.NODE_ENV === 'development' ? '' : '/NuxtCryptoCalculator/'
+  },
+
   loading: '@/components/LoadingBar.vue',
 
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
