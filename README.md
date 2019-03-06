@@ -1,6 +1,8 @@
-# NuxtCryptoCalculator
+## Bitcoin price calculator
 
->Nuxt.js cryptocurrency price calculator
+Consumes the API from [https://www.luno.com/en/api](https://www.luno.com/en/api).
+
+The live app can be found at [https://bgibb95.github.io/NuxtCryptoCalculator/](https://bgibb95.github.io/NuxtCryptoCalculator/).
 
 ## Build Setup
 
@@ -17,6 +19,9 @@ $ npm start
 
 # generate static project
 $ npm run generate
+
+# run tests
+$ npm run test
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
