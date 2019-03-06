@@ -6,6 +6,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { vmid: 'theme', name: 'theme-color', content: '#00415f' },
       {
         hid: 'description',
         name: 'description',
