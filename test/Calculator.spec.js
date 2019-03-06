@@ -46,4 +46,10 @@ describe('Calculator', () => {
         console.log(err)
       })
   })
+
+  test('allows different currency to be selected', () => {
+    wrapper.find('.EUR').element.selected = true
+    wrapper.find('select').trigger('change')
+    expect(wrapper.vm.selected).toBe('Euro')
+  })
 })

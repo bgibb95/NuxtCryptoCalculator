@@ -1,7 +1,7 @@
 {
-  "name": "NuxtCryptoCalculator",
+  "name": "nuxtcryptocalculator",
   "version": "1.0.0",
-  "description": "My amazing Nuxt.js project",
+  "description": "Bitcoin price calculator web app",
   "author": "Brendan Gibb",
   "private": true,
   "scripts": {
@@ -21,6 +21,8 @@
     "@nuxtjs/pwa": "^2.6.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-async-to-generator": "^7.3.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
     "@nuxtjs/eslint-config": "^0.0.1",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",

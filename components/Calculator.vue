@@ -3,13 +3,14 @@
     .row.titleRow        
       h2.mainTitle Bitcoin Price Calculator
 
-      select.selectCurrency(v-model='selected' @change='updateInputs')
-        option(v-for='currency in currencies' :key='currency.name')
-          | {{ currency.name }}	 
+      .selectionContainer
+        select.selectCurrency(v-model='selected' @change='updateInputs')
+          option(v-for='currency in currencies' :key='currency.name' :class='currency.symbol')
+            | {{ currency.name }}	 
             
     .row
       .column
-        img.currencyIcon(src='~/assets/icons/bitcoin.svg')
+        img.currencyIcon(src='~/assets/icons/bitcoin.svg' alt='currencyIcon')
         h2.currencyName Bitcoin
         input.currencyInput(v-model='bitcoinAmount', @keyup='calculateSelectedAmount()' placeholder='0')
         span BTC
@@ -20,7 +21,7 @@
         div(v-for='currency in currencies' :key='currency.name')
           transition(name='fade')
             .selectedContainer(v-if='selected === currency.name')          
-              img.currencyIcon(:src='imagePath(currency.image)', :key='currency.image')
+              img.currencyIcon(:src='imagePath(currency.image)', :key='currency.image' alt='currencyIcon')
               h2.currencyName
                 | {{ currency.name }}
               input.currencyInput(v-model='selectedAmount', @keyup='calculateBitcoinAmount()' :placeholder='selectedPlaceholder')
@@ -32,6 +33,7 @@
 export default {
   data() {
     return {
+      fetching: false,
       fetchError: false,
       selected: 'South African Rand',
       currencyRate: 1,
@@ -74,7 +76,8 @@ export default {
   computed: {
     selectedPlaceholder() {
       if (this.fetchError) return 'Error with network'
-      return this.bitcoinAmount === '' ? '0' : 'Calculating...'
+      if (this.fetching) return 'Updating...'
+      return '0'
     }
   },
   mounted() {
@@ -85,6 +88,9 @@ export default {
       return require('../assets/icons/' + image + '.svg')
     },
     fetchTickerData(pair) {
+      this.fetching = true
+      this.selectedAmount = ''
+
       return this.$axios({
         method: 'get',
         url: `https://cors-anywhere.herokuapp.com/https://api.mybitx.com/api/1/ticker?pair=${pair}`
@@ -105,13 +111,14 @@ export default {
 
       this.fetchTickerData(pair)
         .then(res => {
+          this.fetching = false
           this.fetchError = false
           this.currencyRate = res.data.ask
           this.calculateSelectedAmount()
         })
         .catch(err => {
-          this.fetchError = true
-          console.log(err)
+          this.fetching = false
+          if (err) this.fetchError = true
         })
     },
     isValidInput(input) {
@@ -161,15 +168,30 @@ export default {
 
 .selectCurrency  
   @extend %containerStyle
+  appearance: none
   cursor: pointer
   font-size: 1rem  
   width: 200px
   align-self: center
+  &::-ms-expand
+    display: none
   +breakpoint(tablet)
     width: 350px
-    margin-top: 30px  
   +breakpoint(mobile)
     width: 200px 
+
+.selectionContainer
+  position: relative
+  height: max-content
+  width: max-content
+  +breakpoint(tablet)
+    margin: 40px auto 0
+  &:after
+    color: $darkerBlue
+    content: '▼'
+    +centerV
+    font-size: 0.6rem
+    right: 10px
 
 .currencyInput
   @extend %containerStyle
@@ -195,21 +217,18 @@ option
 .titleRow
   margin-bottom: 30px
   justify-content: space-between
-  align-content: center
-  display: flex
   +breakpoint(tablet)
     flex-direction: column
 
 .mainTitle
   font-size: 2.3rem
   +breakpoint(tablet)
-    width: 90%
+    width: 85%
     margin: 0 auto
 
 .column
   width: 350px
   position: relative
-  margin: 0 auto
   +breakpoint(largeDesktop)
     width: 50%
   +breakpoint(tablet)
@@ -246,6 +265,7 @@ h2
   width: 800px
   border-radius: 10px
   padding: 50px
+  height: auto
   background: white
   box-shadow: 0 12px 10px -6px $darkerBlue
   +breakpoint(largeDesktop)
@@ -253,11 +273,7 @@ h2
   +breakpoint(tablet)
     padding: 60px 10px
     width: 90vw
-    position: relative
-    top: auto
-    left: auto
-    transform: none
   +breakpoint(mobile)
-    padding: 25px 5px
+    padding: 25px 10px
 
 </style>

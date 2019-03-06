@@ -1,9 +1,10 @@
+// Allows jest to interpret SVGs when testing a component
+
 module.exports = {
   process() {
     return 'module.exports = {};'
   },
   getCacheKey() {
-    // The output is always the same.
     return 'svgTransform'
   }
 }

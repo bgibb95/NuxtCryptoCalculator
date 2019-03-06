@@ -24,3 +24,19 @@
     <path d="m0 192h16v16h-16zm0 0" />
   </svg>
 </template>
+
+<style lang="sass" scoped>
+
+@import '~/assets/sass/mixins.sass'
+
+svg
+  position: absolute
+  left: 8%
+  width: 84%
+  bottom: 5%
+  opacity: 0.2
+  +breakpoint(tablet)
+    height: 90%
+    width: auto
+
+</style>
