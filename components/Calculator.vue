@@ -169,7 +169,7 @@ export default {
 .selectCurrency  
   @extend %containerStyle
   appearance: none
-  background: transparent
+  background-color: transparent
   cursor: pointer
   font-size: 1rem  
   width: 200px
