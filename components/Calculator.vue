@@ -91,10 +91,24 @@ export default {
       this.fetching = true
       this.selectedAmount = ''
 
-      return this.$axios({
-        method: 'get',
-        url: `https://cors-anywhere.herokuapp.com/https://api.mybitx.com/api/1/ticker?pair=${pair}`
-      })
+      const url =
+        process.env.NODE_ENV === 'development'
+          ? process.env.FUNCTION_URL
+          : process.env.FUNCTION_URL_PROD
+      const jwt =
+        process.env.NODE_ENV === 'development'
+          ? process.env.JWT
+          : process.env.JWT_PROD
+
+      return this.$axios.post(
+        url,
+        { pair },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`
+          }
+        }
+      )
     },
     updateInputs() {
       let selected

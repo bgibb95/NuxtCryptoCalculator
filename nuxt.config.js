@@ -1,4 +1,6 @@
-module.exports = {
+require('dotenv').config()
+
+export default {
   mode: 'universal',
 
   head: {
@@ -23,7 +25,7 @@ module.exports = {
 
   loading: '@/components/LoadingBar.vue',
 
-  modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxtjs/dotenv'],
 
   css: ['@/assets/sass/fonts.sass'],
 
